@@ -1,6 +1,6 @@
 /*
 MOST RECENT AUTHOR: JACKSON
-DATE: 10/26/2023
+DATE: 10/27/2023
 */
 
 #include "GameMap.hh"
@@ -45,10 +45,10 @@ void GameMap::ChangeHex(int column, int row, Type type) {
     Hexagon* hex = GetHex(column, row); //Retrieves hex from a position
     hex->SetType(type); //Sets the new type of the position
     if (type == Base) {
-        hex->SetWeight(BaseWeight); //Sets to base weight if desired type is base
+        hex->SetWeight(Passable); //Sets to passable is desired type is base
     }
-    else if (type == Wall) {
-        hex->SetWeight(WallWeight); //Sets to wall weight if desired type is wall
+    else {
+        hex->SetWeight(Impassable); //Sets to impassable is desired type is not base
     }
 }
 
@@ -157,7 +157,7 @@ void GameMap::Print(void) {
 }
 
 //Destructor for the map
-GameMap::~GameMap(void) {
+GameMap::~GameMap() {
     //Iterates through each position of the map
     for (int i = 0; i < _columns; i++) {
         for (int j = 0; j < _rows; j++) {

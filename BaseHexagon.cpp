@@ -1,6 +1,6 @@
 /*
 MOST RECENT AUTHOR: JACKSON
-DATE: 10/26/2023
+DATE: 10/27/2023
 */
 
 #include "BaseHexagon.hh"
@@ -10,7 +10,7 @@ Hexagon::Hexagon(int column, int row) {
     _column = column; //Sets column position
     _row = row; //Set row position
     _type = Base; //Default type is base
-    _weight = BaseWeight; //Default weight is base
+    _weight = Passable; //Default weight is passable
 }
 
 //Returns column position of hex
@@ -44,5 +44,5 @@ void Hexagon::SetWeight(Weight weight) {
 }
 
 //Destructor for hex
-Hexagon::~Hexagon(void) {
+Hexagon::~Hexagon() {
 }

@@ -1,6 +1,6 @@
 /*
 MOST RECENT AUTHOR: JACKSON
-DATE: 10/26/2023
+DATE: 10/27/2023
 */
 
 #include "WallHexagon.hh"
@@ -8,5 +8,5 @@ DATE: 10/26/2023
 //Constructor for wall hex
 WallHexagon::WallHexagon(int column, int row) : Hexagon(column, row) {
     _type = Wall; //Sets type to wall
-    _weight = WallWeight; //Sets weight to wall
+    _weight = Impassable; //Sets weight to impassable
 }

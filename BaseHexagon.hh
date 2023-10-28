@@ -1,6 +1,6 @@
 /*
 MOST RECENT AUTHOR: JACKSON
-DATE: 10/26/2023
+DATE: 10/27/2023
 */
 
 #ifndef BASEHEXAGON_HH
@@ -19,12 +19,12 @@ class Hexagon {
     public:
         Hexagon(int column, int row); //Constructor for hex
         int GetColumn(void); //Returns column position of hex
-        int GetRow(void); //Returns hex position of hex
+        int GetRow(void); //Returns row position of hex
         Type GetType(void); //Returns type of hex
         Weight GetWeight(void); //Returns weight of hex
         void SetType(Type type); //Sets type of hex
         void SetWeight(Weight weight); //Sets weight of hex
-        ~Hexagon(void); //Destructor for hex
+        ~Hexagon(); //Destructor for hex
 };
 
 #endif

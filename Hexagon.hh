@@ -1,6 +1,6 @@
 /*
 MOST RECENT AUTHOR: JACKSON
-DATE: 10/26/2023
+DATE: 10/27/2023
 */
 
 #ifndef HEXAGON_HH
@@ -8,16 +8,17 @@ DATE: 10/26/2023
 
 #include <climits>
 
-//Defines the type of hexes (eventually add chest and player/enemy)
+//Defines the type of hexes (eventually add chest and enemy)
 enum Type {
     Base,
     Wall,
+    Player,
 };
 
 //Includes weight for each hex (everything except for base should be high)
 enum Weight {
-    BaseWeight = 1,
-    WallWeight = 1000,
+    Passable = 1,
+    Impassable = 10000,
 };
 
 

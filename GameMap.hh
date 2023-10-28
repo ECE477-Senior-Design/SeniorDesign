@@ -1,6 +1,6 @@
 /*
 MOST RECENT AUTHOR: JACKSON
-DATE: 10/26/2023
+DATE: 10/27/2023
 */
 
 #ifndef GAMEMAP_HH
@@ -43,7 +43,7 @@ class GameMap {
         std::vector<std::vector<int>> ShortestPath(int start_column, int start_row); //Returns the array of distances for a starting point
         void PrintShortestPath(int start_column, int start_row, int end_column, int end_row); //Prints out the path from a starting point to an ending point (function calls ShortestPath)
         void Print(void); //Prints out the basic grid form of the map (maybe want to rename to PrintMap)
-        ~GameMap(void); //Destructor for the map
+        ~GameMap(); //Destructor for the map
 };
 
 #endif
