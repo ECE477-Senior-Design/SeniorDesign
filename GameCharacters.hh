@@ -20,7 +20,7 @@ class GameCharacters {
         int GetNumberCharacters(void); //Returns number of characters
         void AddCharacter(int index, int column, int row,
         int strength, int dexterity, int constitution, int intelligence, int wisdom, int charisma,
-        int max_health_points, int current_health_points, int armor_class, int initiative, int speed, Class class_); //Adds character to character vector
+        int max_health_points, int current_health_points, int armor_class, int initiative, int speed, CharacterType character_type, Class class_); //Adds character to character vector
         Character* GetCharacter(int index); //Returns character at index
         ~GameCharacters(); //Destructor for characters vector
 };

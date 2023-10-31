@@ -1,12 +1,17 @@
 /*
 MOST RECENT AUTHOR: JACKSON
-DATE: 10/27/2023
+DATE: 10/31/2023
 */
 
-#ifndef PLAYER_HH
-#define PLAYER_HH
+#ifndef CHARACTER_HH
+#define CHARACTER_HH
 
-//Defines the class of the player (eventually add ranger and wizard)
+//Defines the class of the character (eventually add ranger and wizard)
+enum CharacterType {
+    Player,
+    Monster,
+};
+
 enum Class {
     Fighter,
 };

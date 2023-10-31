@@ -41,10 +41,10 @@ Hexagon* GameMap::GetHex(int column, int row) {
 }
 
 //Changes the hex based on the type input
-void GameMap::ChangeHex(int column, int row, Type type) {
+void GameMap::ChangeHex(int column, int row, HexagonType type) {
     Hexagon* hex = GetHex(column, row); //Retrieves hex from a position
     hex->SetType(type); //Sets the new type of the position
-    if (type == Base) {
+    if (type == BaseHex) {
         hex->SetWeight(Passable); //Sets to passable is desired type is base
     }
     else {

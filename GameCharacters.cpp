@@ -18,11 +18,12 @@ int GameCharacters::GetNumberCharacters(void) {
 //Adds character to character vector
 void GameCharacters::AddCharacter(int index, int column, int row, 
         int strength, int dexterity, int constitution, int intelligence, int wisdom, int charisma,
-        int max_health_points, int current_health_points, int armor_class, int initiative, int speed, Class class_) {
+        int max_health_points, int current_health_points, int armor_class, int initiative, int speed, CharacterType character_type, Class class_) {
     Character* character = new Character(column, row, 
         strength, dexterity, constitution, intelligence, wisdom, charisma,
         max_health_points, current_health_points, armor_class, initiative, speed);
-    character->SetClass(class_); //Sets class to of character
+    character->SetClass(class_); //Sets class of character 
+    character->SetCharacterType(character_type); //Sets character type
     characters[index] = character; //Adds character to characters vector
 }
 

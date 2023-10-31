@@ -89,6 +89,11 @@ int Character::GetSpeed(void) {
     return _speed;
 }
 
+//Returns type of character 
+CharacterType Character::GetCharacterType(void) {
+    return _character_type;
+}
+
 //Returns class of character
 Class Character::GetClass(void) {
     return _class;
@@ -157,6 +162,11 @@ void Character::SetInitiative(int initiative) {
 //Sets speed of character
 void Character::SetSpeed(int speed) {
     _speed = speed;
+}
+
+//Sets type of character 
+void Character::SetCharacterType(CharacterType character_type) {
+    _character_type = character_type;
 }
 
 //Sets class of character

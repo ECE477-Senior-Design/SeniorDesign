@@ -9,7 +9,7 @@ DATE: 10/27/2023
 Hexagon::Hexagon(int column, int row) {
     _column = column; //Sets column position
     _row = row; //Set row position
-    _type = Base; //Default type is base
+    _type = BaseHex; //Default type is base
     _weight = Passable; //Default weight is passable
 }
 
@@ -24,7 +24,7 @@ int Hexagon::GetRow(void) {
 }
 
 //Returns type of hex
-Type Hexagon::GetType(void) {
+HexagonType Hexagon::GetType(void) {
     return _type;
 }
 
@@ -34,7 +34,7 @@ Weight Hexagon::GetWeight(void) {
 }
 
 //Sets type of hex
-void Hexagon::SetType(Type type) {
+void Hexagon::SetType(HexagonType type) {
     _type = type;
 }
 

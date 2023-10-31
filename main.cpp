@@ -1,6 +1,6 @@
 /*
 MOST RECENT AUTHOR: JACKSON
-DATE: 10/27/2023
+DATE: 10/31/2023
 */
 
 /*
@@ -30,7 +30,7 @@ void MapTest(void) {
     // map.ChangeHex(0, 1, Wall);
     // map.ChangeHex(0, 1, Base);
 
-    map.ChangeHex(1, 0, Wall); //Creating an obstacle
+    map.ChangeHex(1, 0, WallHex); //Creating an obstacle
 
     int start_column = 0;
     int start_row = 0;
@@ -43,10 +43,18 @@ void MapTest(void) {
 
 //Tests creating characters and adding them to a vector of characters using user input
 void CharacterTest(void) {
-    int number_characters;
-    std::cout << "Enter the number of characters (both players and monsters) you would like to have: ";
-    std::cin >> number_characters;
-    std::cout << "You entered: " << number_characters << std::endl;
+    GameMap map(columns, rows);
+    map.Initialize();
+    
+    int number_players;
+    int number_monsters;
+    std::cout << "Enter the number of players you would like to have: ";
+    std::cin >> number_players;
+    std::cout << "You entered: " << number_players << std::endl;
+    std::cout << "Enter the number of monsters you would like to have: ";
+    std::cin >> number_monsters;
+    std::cout << "You entered: " << number_monsters << std::endl;
+    int number_characters = number_players + number_monsters;
     GameCharacters characters(number_characters);
 
     int column;
@@ -62,52 +70,126 @@ void CharacterTest(void) {
     int armor_class;
     int initiative;
     int speed;
-    //Class class_; //Figure out method to enter class (probably string)
-    for (int i = 0; i < number_characters; i++) {
-        std::cout << "Enter the column position of Character " << i << " : ";
+    int class_int;
+    Class class_;
+
+    for (int i = 1; i <= number_players; i++) {
+        std::cout << "Enter the column position of Player " << i << " : ";
         std::cin >> column;
         std::cout << "You entered: " << column << std::endl;
-        std::cout << "Enter the row position of Character " << i << " : ";
+        std::cout << "Enter the row position of Player " << i << " : ";
         std::cin >> row;
         std::cout << "You entered: " << row << std::endl;
-        std::cout << "Enter the strength of Character " << i << " : ";
+        std::cout << "Enter the strength of Player " << i << " : ";
         std::cin >> strength;
         std::cout << "You entered: " << strength << std::endl;
-        std::cout << "Enter the dexterity of Character " << i << " : ";
+        std::cout << "Enter the dexterity of Player " << i << " : ";
         std::cin >> dexterity;
         std::cout << "You entered: " << dexterity << std::endl;
-        std::cout << "Enter the constitution of Character " << i << " : ";
+        std::cout << "Enter the constitution of Player " << i << " : ";
         std::cin >> constitution;
         std::cout << "You entered: " << constitution << std::endl;
-        std::cout << "Enter the intelligence of Character " << i << " : ";
+        std::cout << "Enter the intelligence of Player " << i << " : ";
         std::cin >> intelligence;
         std::cout << "You entered: " << intelligence << std::endl;
-        std::cout << "Enter the wisdom of Character " << i << " : ";
+        std::cout << "Enter the wisdom of Player " << i << " : ";
         std::cin >> wisdom;
         std::cout << "You entered: " << wisdom << std::endl;
-        std::cout << "Enter the charisma of Character " << i << " : ";
+        std::cout << "Enter the charisma of Player " << i << " : ";
         std::cin >> charisma;
         std::cout << "You entered: " << charisma << std::endl;
-        std::cout << "Enter the max health points of Character " << i << " : ";
+        std::cout << "Enter the max health points of Player " << i << " : ";
         std::cin >> max_health_points;
         std::cout << "You entered: " << max_health_points << std::endl;
-        std::cout << "Enter the current health points of Character " << i << " : ";
+        std::cout << "Enter the current health points of Player " << i << " : ";
         std::cin >> current_health_points;
         std::cout << "You entered: " << current_health_points << std::endl;
-        std::cout << "Enter the armor class of Character " << i << " : ";
+        std::cout << "Enter the armor class of Player " << i << " : ";
         std::cin >> armor_class;
         std::cout << "You entered: " << armor_class << std::endl;
-        std::cout << "Enter the initiative of Character " << i << " : ";
+        std::cout << "Enter the initiative of Player " << i << " : ";
         std::cin >> initiative;
         std::cout << "You entered: " << initiative << std::endl;
-        std::cout << "Enter the speed of Character " << i << " : ";
+        std::cout << "Enter the speed of Player " << i << " : ";
         std::cin >> speed;
         std::cout << "You entered: " << speed << std::endl;
+        std::cout << "Enter the class of Player " << i << " (0 == Fighter): ";
+        std::cin >> class_int;
+        std::cout << "You entered: " << class_int << std::endl;
+        if (class_int == 0) {
+            class_ = Fighter;
+        }
+        CharacterType character_type = Player;
+        HexagonType hexagon_type = PlayerHex;
 
-        characters.AddCharacter(i, column, row, 
+        characters.AddCharacter(i - 1, column, row, 
         strength, dexterity, constitution, intelligence, wisdom, charisma,
-        max_health_points, current_health_points, armor_class, initiative, speed, Fighter);
+        max_health_points, current_health_points, armor_class, initiative, speed, character_type, class_);
+        map.ChangeHex(column, row, hexagon_type);
+        HexagonType test = map.GetHex(column, row)->GetType();
+        if (test == PlayerHex) {
+            std::cout << "Changed to PlayerHex" << std::endl;
+        }
     }
+
+    for (int j = 1; j <= number_monsters; j++) {
+        std::cout << "Enter the column position of Monster " << j << " : ";
+        std::cin >> column;
+        std::cout << "You entered: " << column << std::endl;
+        std::cout << "Enter the row position of Monster " << j << " : ";
+        std::cin >> row;
+        std::cout << "You entered: " << row << std::endl;
+        std::cout << "Enter the strength of Monster " << j << " : ";
+        std::cin >> strength;
+        std::cout << "You entered: " << strength << std::endl;
+        std::cout << "Enter the dexterity of Monster " << j << " : ";
+        std::cin >> dexterity;
+        std::cout << "You entered: " << dexterity << std::endl;
+        std::cout << "Enter the constitution of Monster " << j << " : ";
+        std::cin >> constitution;
+        std::cout << "You entered: " << constitution << std::endl;
+        std::cout << "Enter the intelligence of Monster " << j << " : ";
+        std::cin >> intelligence;
+        std::cout << "You entered: " << intelligence << std::endl;
+        std::cout << "Enter the wisdom of Monster " << j << " : ";
+        std::cin >> wisdom;
+        std::cout << "You entered: " << wisdom << std::endl;
+        std::cout << "Enter the charisma of Monster " << j << " : ";
+        std::cin >> charisma;
+        std::cout << "You entered: " << charisma << std::endl;
+        std::cout << "Enter the max health points of Monster " << j << " : ";
+        std::cin >> max_health_points;
+        std::cout << "You entered: " << max_health_points << std::endl;
+        std::cout << "Enter the current health points of Monster " << j << " : ";
+        std::cin >> current_health_points;
+        std::cout << "You entered: " << current_health_points << std::endl;
+        std::cout << "Enter the armor class of Monster " << j << " : ";
+        std::cin >> armor_class;
+        std::cout << "You entered: " << armor_class << std::endl;
+        std::cout << "Enter the initiative of Monster " << j << " : ";
+        std::cin >> initiative;
+        std::cout << "You entered: " << initiative << std::endl;
+        std::cout << "Enter the speed of Monster " << j << " : ";
+        std::cin >> speed;
+        std::cout << "You entered: " << speed << std::endl;
+        std::cout << "Enter the class of Monster " << j << " (0 == Fighter): ";
+        std::cin >> class_int;
+        std::cout << "You entered: " << class_int << std::endl;
+        if (class_int == 0) {
+            class_ = Fighter;
+        }
+        CharacterType character_type = Monster;
+        HexagonType hexagon_type = MonsterHex;
+
+        characters.AddCharacter(number_players + j - 1, column, row, 
+        strength, dexterity, constitution, intelligence, wisdom, charisma,
+        max_health_points, current_health_points, armor_class, initiative, speed, character_type, class_);
+        map.ChangeHex(column, row, hexagon_type);
+        HexagonType test = map.GetHex(column, row)->GetType();
+        if (test == MonsterHex) {
+            std::cout << "Changed to MonsterHex" << std::endl;
+        }
+    }    
 }
 
 int main(int argc, char *argv[]) {

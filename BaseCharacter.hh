@@ -1,6 +1,6 @@
 /*
 MOST RECENT AUTHOR: JACKSON
-DATE: 10/27/2023
+DATE: 10/31/2023
 */
 
 #ifndef BASECHRACTER_HH
@@ -30,6 +30,7 @@ class Character {
         //Maybe just do enum struct in a Weapons.hh file
         //Or keep enum struct in Player.hh
 
+        CharacterType _character_type;
         Class _class; //Class of character
 
     public:
@@ -49,6 +50,7 @@ class Character {
         int GetArmorClass(void); //Returns armor class of character
         int GetInitiative(void); //Returns initiative of character
         int GetSpeed(void); //Returns speed of character
+        CharacterType GetCharacterType(void); //Returns type of character
         Class GetClass(void); //Returns class of character
         void SetColumn(int column); //Sets column position of character
         void SetRow(int row); //Sets row position of character
@@ -63,6 +65,7 @@ class Character {
         void SetArmorClass(int armor_class); //Sets armor class of character
         void SetInitiative(int initiative); //Sets initiative of character
         void SetSpeed(int speed); //Sets speed of character
+        void SetCharacterType(CharacterType character_type);
         void SetClass(Class class_); //Sets class of character
 
         int CalculateModifier(int ability_score); //Returns modifier based on the ability score (may want to move to GamePlay file)
