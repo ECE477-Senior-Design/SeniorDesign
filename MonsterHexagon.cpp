@@ -8,5 +8,5 @@ DATE: 10/31/2023
 //Constructor for monster hex
 MonsterHexagon::MonsterHexagon(int column, int row) : Hexagon(column, row) {
     _type = MonsterHex; //Sets type to monster
-    _weight = Impassable; //Sets weight to impassable
+    _passable = false; //Sets weight to impassable
 }

@@ -7,6 +7,11 @@ DATE: 10/31/2023
 #define HEXAGON_HH
 
 #include <climits>
+#include <vector>
+#include <queue>
+#include <algorithm>
+#include <cmath>
+#include <iostream>
 
 //Defines the type of hexes (eventually add chest and enemy)
 enum HexagonType {
@@ -16,11 +21,11 @@ enum HexagonType {
     MonsterHex,
 };
 
-//Includes weight for each hex (everything except for base should be high)
-enum Weight {
-    Passable = 1,
-    Impassable = 10000,
-};
+// //Includes weight for each hex (everything except for base should be high)
+// enum Weight {
+//     Passable = 1,
+//     Impassable = 10000,
+// };
 
 
 #endif
