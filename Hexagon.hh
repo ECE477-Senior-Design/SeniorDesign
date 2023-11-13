@@ -9,11 +9,12 @@ DATE: 10/31/2023
 #include <climits>
 #include <vector>
 #include <queue>
+#include <unordered_set>
 #include <algorithm>
 #include <cmath>
 #include <iostream>
 
-//Defines the type of hexes (eventually add chest and enemy)
+//Defines the type of hexes (eventually add chest)
 enum HexagonType {
     BaseHex,
     WallHex,

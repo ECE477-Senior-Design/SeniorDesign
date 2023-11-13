@@ -1,6 +1,6 @@
 /*
 MOST RECENT AUTHOR: JACKSON
-DATE: 10/31/2023
+DATE: 11/01/2023
 */
 
 /*
@@ -195,10 +195,14 @@ const int rows = 5;
 void BreadthFirstSearchTest(void) {
     GameMap map(5, 5);
     Hexagon* start = map.GetHex(0, 0);
-    std::vector<Hexagon*> reachable_hexes = map.BreadthFirstSearch(start, 2);
+    map.ChangeHex(0, 2, WallHex);
+    map.ChangeHex(1, 1, WallHex);
+    map.ChangeHex(2, 1, WallHex);
+    map.ChangeHex(2, 0, WallHex);
+    std::vector<Hexagon*> reachable_hexes = map.PossibleMovements(start, 3);
 
     for (Hexagon* hex : reachable_hexes) {
-        std::cout << "Hexagon at (" << hex->GetQ() << ", " << hex->GetR() << ") is reachable." << std::endl;
+        std::cout << "Hexagon at (" << hex->GetHexQ() << ", " << hex->GetHexR() << ") is reachable." << std::endl;
     }
 }
 
@@ -207,11 +211,41 @@ void PrintTest(void) {
     map.PrintMap();
 }
 
+void FieldOfViewTest(void) {
+    GameMap map(5, 5);
+    map.ChangeHex(0, 0, MonsterHex);
+    map.ChangeHex(0, 1, WallHex);
+    Hexagon* start = map.GetHex(0, 0);
+    std::vector fov = map.FieldOfView(start, 3);
+    for (Hexagon* hex : fov) {
+        std::cout << hex->GetHexQ() << ", " << hex->GetHexR() << std::endl;
+    }
+}
+
+void FindClosestPlayerTest(void) {
+    GameMap map(5, 5);
+    map.ChangeHex(0, 0, MonsterHex);
+    map.ChangeHex(3, 2, PlayerHex);
+    map.ChangeHex(0, 4, PlayerHex);
+    map.ChangeHex(4, 3, PlayerHex);
+    // Hexagon* start = map.GetHex(0, 0);
+    // //std::vector<Hexagon*> characters_hexes = {map.GetHex(0, 0), map.GetHex(3, 2), map.GetHex(0, 4), map.GetHex(4, 3)};
+    // map.ChangeHex(0, 1, PlayerHex);
+    // std::vector<Hexagon*> characters_hexes = {map.GetHex(0, 0), map.GetHex(0, 1)};
+    // std::vector<Hexagon*> closest_player_path = map.FindClosestPlayer(start, characters_hexes);
+    // if (closest_player_path.size() > 0) {
+    //     Hexagon* destination = closest_player_path.back();
+    //     std::cout << destination->GetHexQ() << " " << destination->GetHexR() << std::endl;
+    // }
+}
+
 int main(int argc, char *argv[]) {
     //MapTest();
     //CharacterTest();
-    BreadthFirstSearchTest();
-    PrintTest();
+    //BreadthFirstSearchTest();
+    //PrintTest();
+    FieldOfViewTest();
+    //FindClosestPlayerTest();
 
     return 0;
 }

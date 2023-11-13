@@ -9,16 +9,15 @@ DATE: 10/27/2023
 #include "BaseHexagon.hh"
 
 //Node structure to keep track of column, row, and distance of each hex for shortest path
-struct Node {
-    int column;
-    int row;
-    int distance;
+struct AStarNode {
+    Hexagon* hex;
+    AStarNode* parent;
+    int g_cost;
+    int h_cost;
 
-    Node(int column, int row, int distance) : column(column), row(row), distance(distance) {}
+    AStarNode(Hexagon* hexagon, AStarNode* parent_node, int g, int h) : hex(hexagon), parent(parent_node), g_cost(g), h_cost(h) {}
 
-    bool operator>(const Node& other) const {
-        return distance > other.distance;
-    }
+    int GetFCost() const { return g_cost + h_cost; }
 };
 
 // //Class definiton for the game map and its associated functions
@@ -44,21 +43,27 @@ struct Node {
 
 class GameMap {
     private:
-        int _columns;
         int _rows;
+        int _columns;
         std::vector<std::vector<Hexagon*>> map;
     
     public:
-        GameMap(int columns, int rows);
+        GameMap(int rows, int columns);
 
-        int GetColumns(void); //Returns the number of columns
         int GetRows(void); //Returns the number of rows
+        int GetColumns(void); //Returns the number of columns
 
-        Hexagon* GetHex(int column, int row);
+        Hexagon* GetHex(int row, int column);
         void ChangeHex(int column, int row, HexagonType type);
 
         std::vector<Hexagon*> GetNeighbors(Hexagon* hexagon);
-        std::vector<Hexagon*> BreadthFirstSearch(Hexagon* start, int movement);
+        std::vector<Hexagon*> PossibleMovements(Hexagon* start, int movement);
+        int HexDistance(Hexagon* start, Hexagon* end);
+        double Lerp(int a, int b, double t);
+        Hexagon* HexLerp(Hexagon* a, Hexagon* b, double t);
+        std::vector<Hexagon*> HexLineDraw(Hexagon* start, Hexagon* end, bool& check);
+        std::vector<Hexagon*> FieldOfView(Hexagon* start, int range);
+        std::vector<Hexagon*> FindClosestPlayer(Hexagon* monster_hexagon, std::vector<Hexagon*> characters_hexagons);
 
         void PrintMap(void);
 

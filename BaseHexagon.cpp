@@ -27,16 +27,26 @@ DATE: 10/31/2023
 Hexagon::Hexagon(int q, int r) {
     _q = q;
     _r = r;
+    _row = r;
+    _column = q + floor(r / 2);
     _type = BaseHex; //Default type is base
     _passable = true; //Default weight is passable
 }
 
-int Hexagon::GetQ(void) {
+int Hexagon::GetHexQ(void) {
     return _q;
 }
 
-int Hexagon::GetR(void) {
+int Hexagon::GetHexR(void) {
     return _r;
+}
+
+int Hexagon::GetHexRow(void) {
+    return _row;
+}
+
+int Hexagon::GetHexColumn(void) {
+    return _column;
 }
 
 //Returns type of hex
@@ -44,34 +54,30 @@ HexagonType Hexagon::GetType(void) {
     return _type;
 }
 
-// //Returns weight of hex
-// Weight Hexagon::GetWeight(void) {
-//     return _weight;
-// }
-
 bool Hexagon::GetPassable(void) {
     return _passable;
 }
 
-//Sets type of hex
-void Hexagon::SetQ(int q) {
+void Hexagon::SetHexQ(int q) {
     _q = q;
 }
 
-//Sets weight of hex
-void Hexagon::SetR(int r) {
+void Hexagon::SetHexR(int r) {
     _r = r;
+}
+
+void Hexagon::SetHexRow(int row) {
+    _row = row;
+}
+
+void Hexagon::SetHexColumn(int column) {
+    _column = column;
 }
 
 //Sets type of hex
 void Hexagon::SetType(HexagonType type) {
     _type = type;
 }
-
-// //Sets weight of hex
-// void Hexagon::SetWeight(Weight weight) {
-//     _weight = weight;
-// }
 
 void Hexagon::SetPassable(bool passable) {
     _passable = passable;

@@ -1,11 +1,11 @@
 /*
 MOST RECENT AUTHOR: JACKSON
-DATE: 10/31/2023
+DATE: 11/01/2023
 */
 
 #include "GameMap.hh"
 
-GameMap::GameMap(int columns, int rows) : _columns(columns), _rows(rows) {
+GameMap::GameMap(int rows, int columns) : _rows(rows), _columns(columns) {
     map.resize(rows, std::vector<Hexagon*>(columns, nullptr));
 
     for (int r = 0; r < rows; r++) {
@@ -16,28 +16,28 @@ GameMap::GameMap(int columns, int rows) : _columns(columns), _rows(rows) {
     }   
 }
 
-//Returns the number of columns
-int GameMap::GetColumns(void) {
-    return _columns;
-}
-
 //Returns the number of rows
 int GameMap::GetRows(void) {
     return _rows;
 }
 
+//Returns the number of columns
+int GameMap::GetColumns(void) {
+    return _columns;
+}
+
 //Returns pointer to the hex
-Hexagon* GameMap::GetHex(int column, int row) {
-    if (column >= 0 && column < _columns && row >= 0 && row < _rows) {
-        return map[column][row];
+Hexagon* GameMap::GetHex(int row, int column) {
+    if (row >= 0 && row < _rows && column >= 0 && column < _columns) {
+        return map[row][column];
     } 
     else {
         return nullptr;
     }
 }
 
-void GameMap::ChangeHex(int column, int row, HexagonType type) {
-    Hexagon* hex = GetHex(column, row); //Retrieves hex from a position
+void GameMap::ChangeHex(int row, int column, HexagonType type) {
+    Hexagon* hex = GetHex(row, column); //Retrieves hex from a position
     hex->SetType(type); //Sets the new type of the position
     if (type == BaseHex) {
         hex->SetPassable(true); //Sets to passable is desired type is base
@@ -134,26 +134,26 @@ void GameMap::ChangeHex(int column, int row, HexagonType type) {
 
 std::vector<Hexagon*> GameMap::GetNeighbors(Hexagon* hexagon) {
     std::vector<Hexagon*> neighbors;
-    int q = hexagon->GetQ();
-    int r = hexagon->GetR();
+    int q = hexagon->GetHexQ();
+    int r = hexagon->GetHexR();
     const std::vector<int> dq = {1, 1, 0, -1, -1, 0};
     const std::vector<int> dr = {0, -1, -1, 0, 1, 1};
 
     for (int i = 0; i < 6; ++i) {
         int neighbor_q = q + dq[i];
         int neighbor_r = r + dr[i];
+        int row = neighbor_r;
+        int column = neighbor_q + floor(neighbor_r / 2);
 
-        if (neighbor_q >= 0 && neighbor_q < _columns &&
-            neighbor_r >= 0 && neighbor_r < _rows) {
-            neighbors.push_back(GetHex(neighbor_q, neighbor_r));
+        if (row >= 0 && row < _rows && column >= 0 && column < _columns) {
+            neighbors.push_back(GetHex(row, column));
         }
     }
 
     return neighbors;
 }
 
-//Function does not work for now. It keeps missing the last element
-std::vector<Hexagon*> GameMap::BreadthFirstSearch(Hexagon* start, int movement) {
+std::vector<Hexagon*> GameMap::PossibleMovements(Hexagon* start, int movement) {
     std::queue<std::pair<Hexagon*, int>> queue;
     std::vector<Hexagon*> visited;
     queue.push({start, 0});
@@ -180,18 +180,189 @@ std::vector<Hexagon*> GameMap::BreadthFirstSearch(Hexagon* start, int movement) 
     return visited;
 }
 
+int GameMap::HexDistance(Hexagon* start, Hexagon* end) {
+    return (abs(start->GetHexQ() - end->GetHexQ()) + abs(start->GetHexQ() + start->GetHexR() - end->GetHexQ() - end->GetHexR()) + abs(start->GetHexR() - end->GetHexR())) / 2;
+}
+
+// std::vector<Hexagon*> ReconstructPath(AStarNode* end_node) {
+//     std::vector<Hexagon*> path;
+//     AStarNode* current = end_node;
+//     while (current != nullptr) {
+//         path.push_back(current->hex);
+//         current = current->parent;
+//     }
+//     std::reverse(path.begin(), path.end());
+//     return path;
+// }
+
+double GameMap::Lerp(int a, int b, double t) {
+    return a + (b - a) * t;
+}
+
+Hexagon* GameMap::HexLerp(Hexagon* a, Hexagon* b, double t) {
+    double q_temp = Lerp(a->GetHexQ(), b->GetHexQ(), t);
+    double r_temp = Lerp(a->GetHexR(), b->GetHexR(), t);
+    int q = q_temp;
+    int r = r_temp;
+    double q_diff = abs(q - q_temp);
+    double r_diff = abs(r - r_temp);
+    if (q_diff > r_diff) {
+        q = -r;
+    }
+    else {
+        r = -q;
+    }
+    int row = r;
+    int column = q + floor(r / 2);
+    Hexagon* hexagon = GetHex(row, column);
+    
+    return hexagon;
+}
+
+std::vector<Hexagon*> GameMap::HexLineDraw(Hexagon* start, Hexagon* end, bool& check) {
+    int distance = HexDistance(start, end);
+    std::vector<Hexagon*> line = {};
+    double step = 1.0 / std::max(distance, 1);
+    for (int i = 0; i <= distance; i++) {
+        Hexagon* output = HexLerp(start, end, step * i);
+        if (output->GetType() == WallHex) {
+            check = false;
+            break;
+        }
+        else {
+            check = true;
+            line.push_back(HexLerp(start, end, step * i));
+        }
+    }
+
+    return line;
+}
+
+std::vector<Hexagon*> GameMap::FieldOfView(Hexagon* start, int range) {
+    std::vector<Hexagon*> fov = {};
+    std::vector<Hexagon*> fov_temp = {};
+    bool check = false;
+    for (int q = -range; q <= range; q++) {
+        for (int r = std::max(-range, -q - range); r <= std::min(range, -q + range); r++) {
+            int new_q = start->GetHexQ() + q;
+            int new_r = start->GetHexR() + r;
+            Hexagon* input = GetHex(new_r, new_q + floor(new_r / 2));
+            fov_temp = HexLineDraw(start, input, check);
+            if (check == true) {
+                fov.insert(fov.end(), fov_temp.begin(), fov_temp.end());
+            }
+            else {
+                continue;
+            }       
+        }
+    }
+
+    return fov;
+}
+
+//ALTERNATE SOLUTION:
+//Do Field of View algorithm (required)
+//Find closest neighboring player hex for each player using simple distance calculation
+//Do A* (or maybe other pathfinding) to find shortest path to selected hex
+//Move monster hex to as many spaces it can move along the path
+
+//Field of View
+//Draw line to hex at sight distance
+//Do this for all hexes at sight distance
+//Do not include hexes positioned after either walls or all non passable hexes (probably just walls)
+
+//Not finished
+//For each player within the game
+//For each neighboring hex of each player that is passable
+//Find the shortest path for each neighboring hex
+//Choose the shortest path out of all of them
+// std::vector<Hexagon*> GameMap::FindClosestPlayer(Hexagon* monster_hex, std::vector<Hexagon*> character_hexes) {
+//     auto Compare = [](AStarNode* node1, AStarNode* node2) {
+//         return node1->GetFCost() > node2->GetFCost();
+//     };
+
+//     int shortest_path_length = std::numeric_limits<int>::max();
+//     std::vector<Hexagon*> shortest_path;
+
+//     for (Hexagon* character_hex : character_hexes) {
+//         if (character_hex->GetType() == PlayerHex) {
+//             std::priority_queue<AStarNode*, std::vector<AStarNode*>, decltype(Compare)> open_set(Compare);
+//             std::unordered_set<Hexagon*> closed_set;
+//             std::unordered_map<Hexagon*, AStarNode*> node_map;
+
+//             std::vector<Hexagon*> player_hex_neighbors = GetNeighbors(character_hex);
+//             for (Hexagon* player_hex_neighbor : player_hex_neighbors) {
+//                 if (player_hex_neighbor->GetPassable()) {
+//                     AStarNode* start_node = new AStarNode(monster_hex, nullptr, 0, HexDistance(monster_hex, player_hex_neighbor));
+
+//                     open_set.push(start_node);
+//                     node_map[monster_hex] = start_node;
+
+//                     while (!open_set.empty()) {
+//                         AStarNode* current = open_set.top();
+//                         open_set.pop();
+
+//                         if (current->hex == player_hex_neighbor) {
+//                             std::vector<Hexagon*> path = ReconstructPath(current);
+//                             if (int(path.size()) < shortest_path_length) {
+//                                 shortest_path_length = path.size();
+//                                 shortest_path = path;
+//                             }
+//                             for (const auto& pair : node_map) {
+//                                 if (pair.second != nullptr) {
+//                                     delete pair.second;
+//                                 }  
+//                             }
+//                             break;
+//                         }
+
+//                         closed_set.insert(current->hex);
+
+//                         for (Hexagon* neighbor : GetNeighbors(current->hex)) {
+//                             if (neighbor->GetPassable() && closed_set.find(neighbor) == closed_set.end()) {
+//                                 int tentative_g_cost = current->g_cost + 1;
+
+//                                 AStarNode* neighbor_node = nullptr;
+//                                 auto it = node_map.find(neighbor);
+//                                 if (it == node_map.end()) {
+//                                     int h_cost = HexDistance(neighbor, player_hex_neighbor);
+//                                     neighbor_node = new AStarNode(neighbor, current, tentative_g_cost, h_cost);
+//                                     open_set.push(neighbor_node);
+//                                     node_map[neighbor] = neighbor_node;
+//                                 } else {
+//                                     neighbor_node = it->second;
+//                                     if (tentative_g_cost < neighbor_node->g_cost) {
+//                                         neighbor_node->g_cost = tentative_g_cost;
+//                                         neighbor_node->parent = current;
+//                                     }
+//                                 }
+//                             }
+//                         }
+//                     }
+//                     // for (const auto& pair : node_map) {
+//                     //     if (pair.second != nullptr) {
+//                     //         delete pair.second;
+//                     //     }  
+//                     // }
+//                 }
+//             }
+//         }
+//     }
+
+//     return shortest_path;
+// }
+
 void GameMap::PrintMap(void) {
-    for (size_t q = 0; q < map.size(); q++) {
-        if (q % 2 == 1) {
+    for (int row = 0; row < _rows; row++) {
+        if (row % 2 == 1) {
             std::cout << "        ";
         }
-        for (size_t r = 0; r < map[q].size(); r++) {
-            HexagonType type = map[q][r]->GetType();
+        for (int column = 0; column < _columns; column++) {
+            HexagonType type = map[row][column]->GetType();
             if (type == BaseHex) {
                 std::string output = "Base ";
-                std::cout << output << map[q][r]->GetQ() << " " << map[q][r]->GetR() << " ";
+                std::cout << output << map[row][column]->GetHexQ() << " " << map[row][column]->GetHexR() << " ";
             }
-            
         }
         std::cout << std::endl;
     }
@@ -200,11 +371,11 @@ void GameMap::PrintMap(void) {
 //Destructor for the map
 GameMap::~GameMap() {
     //Iterates through each position of the map
-    for (int r = 0; r < _rows; r++) {
-        for (int q = 0; q < _columns; q++) {
+    for (int row = 0; row < _rows; row++) {
+        for (int column = 0; column < _columns; column++) {
             //Checks to see if the map has a hex (it should always pass this)
-            if (map[r][q] != nullptr) {
-                delete map[r][q]; //Deletes hex
+            if (map[row][column] != nullptr) {
+                delete map[row][column]; //Deletes hex
             }
         }
     }

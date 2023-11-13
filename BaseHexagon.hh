@@ -31,19 +31,25 @@ class Hexagon {
     protected:
         int _q;
         int _r;
+        int _row;
+        int _column;
         HexagonType _type;
         bool _passable;
 
     public:
         Hexagon(int q, int r);
 
-        int GetQ(void);
-        int GetR(void);
+        int GetHexQ(void);
+        int GetHexR(void);
+        int GetHexRow(void);
+        int GetHexColumn(void);
         HexagonType GetType(void);
         bool GetPassable(void);
 
-        void SetQ(int q);
-        void SetR(int r);
+        void SetHexQ(int q);
+        void SetHexR(int r);
+        void SetHexRow(int row);
+        void SetHexColumn(int column);
         void SetType(HexagonType type);
         void SetPassable(bool passable);
 
