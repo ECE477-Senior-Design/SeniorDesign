@@ -18,7 +18,7 @@ make dungeon_crawler
 Finally to execute the project:
 
 ```
-cd bin
+cd ../bin
 ./dungeon_crawler
 ```
 
