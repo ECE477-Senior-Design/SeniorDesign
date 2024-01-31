@@ -8,9 +8,12 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -g")
 
 # Set output directories
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set(SOURCES ./src/main.cpp
-            ./src/character.cpp
-            ./src/character.h)
+
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/character)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/map)
+
+set(SOURCES 
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 
 
 # if external libraries are used, add them here
