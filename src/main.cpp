@@ -9,8 +9,8 @@ NOTE: NEEDS TO BE RAN ON A LINUX SYSTEM OR ECEPROG. WE NEED TO DISCUSS IF WANT T
 Next to do: Print out map in a more meaningful way to better see result of code
 */
 
-#include "GameMap.hh"
-#include "GameCharacters.hh"
+#include "map/GameMap.hh"
+#include "character/GameCharacters.hh"
 
 //Arbitrary small to make it easier to see. Can adjust as needed
 const int columns = 5;
@@ -243,8 +243,8 @@ int main(int argc, char *argv[]) {
     //MapTest();
     //CharacterTest();
     //BreadthFirstSearchTest();
-    //PrintTest();
-    FieldOfViewTest();
+    PrintTest();
+   // FieldOfViewTest();
     //FindClosestPlayerTest();
 
     return 0;
