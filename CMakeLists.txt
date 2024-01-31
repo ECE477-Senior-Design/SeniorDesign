@@ -9,11 +9,31 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -g")
 # Set output directories
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/character)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/map)
+#add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/character)
+#add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/map)
 
 set(SOURCES 
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
+    src/main.cpp
+    src/character/Character.hh
+    src/character/BaseCharacter.hh
+    src/character/BaseCharacter.cpp
+    src/character/GameCharacters.hh
+    src/character/GameCharacters.cpp
+    src/character/MonsterFighter.hh
+    src/character/MonsterFighter.cpp
+    src/character/PlayerFighter.hh
+    src/character/PlayerFighter.cpp
+    src/map/Hexagon.hh
+    src/map/BaseHexagon.hh
+    src/map/BaseHexagon.cpp
+    src/map/GameMap.hh
+    src/map/GameMap.cpp
+    src/map/MonsterHexagon.hh
+    src/map/MonsterHexagon.cpp
+    src/map/PlayerHexagon.hh
+    src/map/PlayerHexagon.cpp
+    src/map/WallHexagon.hh
+    src/map/WallHexagon.cpp)
 
 
 # if external libraries are used, add them here
