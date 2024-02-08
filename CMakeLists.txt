@@ -7,13 +7,18 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -g")
 
 # Set output directories
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../bin)
 
-#add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/character)
-#add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/map)
+#add_subdirectory(src)
+#add_subdirectory(test)
+
+include_directories( ./include ./src )
+include(CTest)
+
+set(MAIN
+    src/main.cpp)
 
 set(SOURCES 
-    src/main.cpp
     src/character/Character.hh
     src/character/BaseCharacter.hh
     src/character/BaseCharacter.cpp
@@ -36,6 +41,7 @@ set(SOURCES
     src/map/WallHexagon.cpp)
 
 
+
 # if external libraries are used, add them here
 
 # Set system name macro
@@ -56,4 +62,23 @@ FATAL: In-source builds are not allowed.
 ")
 endif()
 
-add_executable(dungeon_crawler ${SOURCES})
+find_package(Boost 1.74)
+# Check for libray, if found print message, include dirs and link libraries.
+
+
+enable_testing()
+
+add_executable(dungeon_crawler ${MAIN} ${SOURCES})
+add_executable(char_test test/test_character.cpp ${SOURCES})
+add_executable(map_test test/test_map.cpp ${SOURCES})
+
+if(Boost_FOUND)
+    message("Boost Found")
+    include_directories(${Boost_INCLUDE_DIRS})
+    target_link_libraries(dungeon_crawler ${Boost_LIBRARIES})
+elseif(NOT Boost_FOUND)
+    error("Boost Not Found")
+endif()
+
+add_test(NAME char_test COMMAND $<TARGET_FILE:char_test>)
+add_test(NAME map_test COMMAND $<TARGET_FILE:map_test>)

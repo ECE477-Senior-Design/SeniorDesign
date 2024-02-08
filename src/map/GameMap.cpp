@@ -363,6 +363,22 @@ void GameMap::PrintMap(void) {
                 std::string output = "Base ";
                 std::cout << output << map[row][column]->GetHexQ() << " " << map[row][column]->GetHexR() << " ";
             }
+            else if (type == WallHex) {
+                std::string output = "Wall ";
+                std::cout << output << map[row][column]->GetHexQ() << " " << map[row][column]->GetHexR() << " ";
+            }
+            else if (type == PlayerHex) {
+                std::string output = "Player ";
+                std::cout << output << map[row][column]->GetHexQ() << " " << map[row][column]->GetHexR() << " ";
+            }
+            else if (type == MonsterHex) {
+                std::string output = "Monster ";
+                std::cout << output << map[row][column]->GetHexQ() << " " << map[row][column]->GetHexR() << " ";
+            }
+            else {
+                std::string output = "Unknown ";
+                std::cout << output << map[row][column]->GetHexQ() << " " << map[row][column]->GetHexR() << " ";
+            }
         }
         std::cout << std::endl;
     }
