@@ -26,13 +26,15 @@ GameCharacters::GameCharacters(std::vector<std::string> input_strlist) {
             character_info.push_back(token);
             input.erase(0, pos + delimiter.length());
         }
+        character_info.push_back(input);
+        
         Character* character = new Character(character_info[0], std::stoi(character_info[1]), std::stoi(character_info[2]), 
             std::stoi(character_info[3]), std::stoi(character_info[4]), std::stoi(character_info[5]), std::stoi(character_info[6]), 
             std::stoi(character_info[7]), std::stoi(character_info[8]), std::stoi(character_info[9]), std::stoi(character_info[10]), 
-            std::stoi(character_info[11]), std::stoi(character_info[12]), std::stoi(character_info[13]), std::stoi(character_info[14]), 
-            std::stoi(character_info[15]), std::stoi(character_info[16]), character_info[17]);
+            std::stoi(character_info[11]), std::stoi(character_info[12]), std::stoi(character_info[13]));
 
-        //TODO: Set class and character type --> need to convert string to enum
+        character->SetCharacterType(static_cast<CharacterType> (std::stoi(character_info[14])));
+        character->SetClass(static_cast<Class> (std::stoi(character_info[15])));
 
         characters.push_back(character);
     }

@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
     vector<string> input = PromptGameStart();
     GameMap map = GameMap(input[0]);
     map.PrintMap();
-
+    GameCharacters characters = GameCharacters(input);
     //initialize charactesr from input vector
     
     return 0;

@@ -8,6 +8,7 @@ DATE: 10/31/2023
 
 #include <string>
 #include <vector>
+#include <iostream>
 
 enum CharacterType {
     Player,
