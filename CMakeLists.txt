@@ -68,5 +68,11 @@ add_executable(dungeon_crawler ${MAIN} ${SOURCES})
 add_executable(char_test test/test_character.cpp ${SOURCES})
 add_executable(map_test test/test_map.cpp ${SOURCES})
 
+add_custom_target(run
+    COMMAND dungeon_crawler
+    DEPENDS dungeon_crawler
+    WORKING_DIRECTORY ${CMAKE_PROJECT_DIR}
+)
+
 add_test(NAME char_test COMMAND $<TARGET_FILE:char_test>)
 add_test(NAME map_test COMMAND $<TARGET_FILE:map_test>)
