@@ -13,7 +13,6 @@ using namespace std;
 #include <iostream>
 #include <fstream>
 
-//#include "boost/property_tree/json_parser.hpp"
 #include "map/GameMap.hh"
 #include "character/GameCharacters.hh"
 
@@ -46,18 +45,7 @@ vector<string> getMapandCharStrings(string filepath) {
     return(input_list);
 }
 
-GameMap *create_map(string mapstring) {
-    vector<HexagonType> data_types = {BaseHex, WallHex, PlayerHex, MonsterHex};
-    GameMap *map = new GameMap(rows, columns);
-    for(int i = 0; i < columns; i++) {
-        for(int j = 0; j < rows; j++) {
-            map->ChangeHex(i, j, data_types[((int) mapstring[rows*i + j]) - 48]);
-        }
-    }
-    return map;
-}
-
-int main(int argc, char *argv[]) {
+vector<string> PromptGameStart() {
     char input;
     vector<string> game_input;
     cout << "Welcome to the Dungeon Crawler Board!\n" << endl;
@@ -77,7 +65,7 @@ int main(int argc, char *argv[]) {
             game_input = getMapandCharStrings("../src/input.txt");
             if(game_input.size() == 0) {
                 cout << "Failed to read file. Exiting program" << endl;
-                return 0;
+                exit(1);
             }
             break;
         }
@@ -86,8 +74,16 @@ int main(int argc, char *argv[]) {
         }
     }
     cout << "Map and characters loaded successfully\n\n" << endl;
+    return game_input;
+}
 
-    GameMap *map = create_map(game_input[0]);
-    map->PrintMap();
+int main(int argc, char *argv[]) {
+    
+    vector<string> input = PromptGameStart();
+    GameMap map = GameMap(input[0]);
+    map.PrintMap();
+
+    //initialize charactesr from input vector
+    
     return 0;
 }

@@ -16,6 +16,26 @@ GameMap::GameMap(int rows, int columns) : _rows(rows), _columns(columns) {
     }   
 }
 
+GameMap::GameMap(std::string mapstring) {
+    _rows = _columns = int(sqrt(mapstring.length()) + 0.5);
+    std::vector<HexagonType> data_types = {BaseHex, WallHex, PlayerHex, MonsterHex};
+
+    map.resize(_rows, std::vector<Hexagon*>(_columns, nullptr));
+    for (int r = 0; r < _rows; r++) {
+        int r_offset = -1 * (r / 2);
+        for (int q = r_offset; q < _columns + r_offset; q++) {
+            map[r][q + floor(r / 2)] = new Hexagon(q, r);
+        }
+    }
+
+    for (int i = 0; i < _columns; i++) {
+        for (int j = 0; j < _rows; j++) {
+            ChangeHex(i, j, data_types[((int) mapstring[_rows*i + j]) - 48]);
+        }
+    }
+
+}
+
 //Returns the number of rows
 int GameMap::GetRows(void) {
     return _rows;

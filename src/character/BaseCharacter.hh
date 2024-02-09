@@ -11,6 +11,7 @@ DATE: 10/31/2023
 //Class definition for a player hexagon
 class Character {
     protected:
+        std::string _name; //Name of character
         int _column; //Column position of character
         int _row; //Row position of character
 
@@ -34,9 +35,10 @@ class Character {
         Class _class; //Class of character
 
     public:
-        Character(int column, int row, 
+        Character(std::string name, int column, int row, 
         int strength, int dexterity, int constitution, int intelligence, int wisdom, int charisma,
         int max_health_points, int current_health_points, int armor_class, int initiative, int speed); //Constructor for character class that keeps track of hex position, ability score, and some combat values
+        std::string GetName(void); //Returns name of character
         int GetColumn(void); //Returns column position of character
         int GetRow(void); //Returns row position of character
         int GetStrength(void); //Returns strength of character

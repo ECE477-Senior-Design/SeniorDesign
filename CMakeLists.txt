@@ -62,23 +62,11 @@ FATAL: In-source builds are not allowed.
 ")
 endif()
 
-find_package(Boost 1.74)
-# Check for libray, if found print message, include dirs and link libraries.
-
-
 enable_testing()
 
 add_executable(dungeon_crawler ${MAIN} ${SOURCES})
 add_executable(char_test test/test_character.cpp ${SOURCES})
 add_executable(map_test test/test_map.cpp ${SOURCES})
-
-if(Boost_FOUND)
-    message("Boost Found")
-    include_directories(${Boost_INCLUDE_DIRS})
-    target_link_libraries(dungeon_crawler ${Boost_LIBRARIES})
-elseif(NOT Boost_FOUND)
-    error("Boost Not Found")
-endif()
 
 add_test(NAME char_test COMMAND $<TARGET_FILE:char_test>)
 add_test(NAME map_test COMMAND $<TARGET_FILE:map_test>)

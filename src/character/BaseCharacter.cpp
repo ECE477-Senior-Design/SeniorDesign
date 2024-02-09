@@ -6,9 +6,10 @@ DATE: 10/27/2023
 #include "BaseCharacter.hh"
 
 //Constructor for character class that keeps track of hex position, ability score, and some combat values
-Character::Character(int column, int row, 
+Character::Character(std::string name, int column, int row, 
         int strength, int dexterity, int constitution, int intelligence, int wisdom, int charisma,
         int max_health_points, int current_health_points, int armor_class, int initiative, int speed) {
+    _name = name;
     _column = column;
     _row = row;
     _strength = strength;
@@ -22,6 +23,11 @@ Character::Character(int column, int row,
     _armor_class = armor_class;
     _initiative = initiative;
     _speed = speed;
+}
+
+//Returns name of character
+std::string Character::GetName(void) {
+    return _name;
 }
 
 //Returns column position of character
