@@ -6,10 +6,10 @@ DATE: 10/31/2023
 #include "PlayerFighter.hh"
 
 //Constructor for fighter class for player
-PlayerFighter::PlayerFighter(int column, int row, 
+PlayerFighter::PlayerFighter(std::string name, int column, int row, 
         int strength, int dexterity, int constitution, int intelligence, int wisdom, int charisma,
         int max_health_points, int current_health_points, int armor_class, int initiative, int speed) :
-        Character(column, row, 
+        Character(name, column, row, 
         strength, dexterity, constitution, intelligence, wisdom, charisma,
         max_health_points, current_health_points, armor_class, initiative, speed) {
     _character_type = Player; //Sets character type to player

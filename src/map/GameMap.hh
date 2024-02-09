@@ -49,6 +49,7 @@ class GameMap {
     
     public:
         GameMap(int rows, int columns);
+        GameMap(std::string mapstring);
 
         int GetRows(void); //Returns the number of rows
         int GetColumns(void); //Returns the number of columns
