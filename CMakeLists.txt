@@ -38,7 +38,11 @@ set(SOURCES
     src/map/PlayerHexagon.hh
     src/map/PlayerHexagon.cpp
     src/map/WallHexagon.hh
-    src/map/WallHexagon.cpp)
+    src/map/WallHexagon.cpp
+    src/gameplay/gameflow.hh
+    src/gameplay/gameflow.cpp
+    src/utils/utils.hh
+    src/utils/utils.cpp)
 
 
 
