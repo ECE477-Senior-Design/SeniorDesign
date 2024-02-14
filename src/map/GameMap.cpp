@@ -18,7 +18,6 @@ GameMap::GameMap(int rows, int columns) : _rows(rows), _columns(columns) {
 
 GameMap::GameMap(std::string mapstring) {
     _rows = _columns = int(sqrt(mapstring.length()) + 0.5);
-    std::vector<HexagonType> data_types = {BaseHex, WallHex, PlayerHex, MonsterHex};
 
     map.resize(_rows, std::vector<Hexagon*>(_columns, nullptr));
     for (int r = 0; r < _rows; r++) {
@@ -30,7 +29,7 @@ GameMap::GameMap(std::string mapstring) {
 
     for (int i = 0; i < _columns; i++) {
         for (int j = 0; j < _rows; j++) {
-            ChangeHex(i, j, data_types[((int) mapstring[_rows*i + j]) - 48]);
+            ChangeHex(i, j, static_cast<HexagonType> ((int) mapstring[_rows*i + j] - 48));
         }
     }
 

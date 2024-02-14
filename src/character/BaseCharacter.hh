@@ -52,6 +52,7 @@ class Character {
         int GetArmorClass(void); //Returns armor class of character
         int GetInitiative(void); //Returns initiative of character
         int GetSpeed(void); //Returns speed of character
+        void DisplayCharacterInfo(void); //Displays character info
         CharacterType GetCharacterType(void); //Returns type of character
         Class GetClass(void); //Returns class of character
         void SetColumn(int column); //Sets column position of character

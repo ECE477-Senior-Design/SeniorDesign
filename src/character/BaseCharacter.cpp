@@ -95,6 +95,24 @@ int Character::GetSpeed(void) {
     return _speed;
 }
 
+//Displays character info
+void Character::DisplayCharacterInfo(void) {
+    std::cout << "Name: " << _name << std::endl;
+    std::cout << "Column: " << _column << std::endl;
+    std::cout << "Row: " << _row << std::endl;
+    std::cout << "Strength: " << _strength << std::endl;
+    std::cout << "Dexterity: " << _dexterity << std::endl;
+    std::cout << "Constitution: " << _constitution << std::endl;
+    std::cout << "Intelligence: " << _intelligence << std::endl;
+    std::cout << "Wisdom: " << _wisdom << std::endl;
+    std::cout << "Charisma: " << _charisma << std::endl;
+    std::cout << "Max Health Points: " << _max_health_points << std::endl;
+    std::cout << "Current Health Points: " << _current_health_points << std::endl;
+    std::cout << "Armor Class: " << _armor_class << std::endl;
+    std::cout << "Initiative: " << _initiative << std::endl;
+    std::cout << "Speed: " << _speed << std::endl;
+}
+
 //Returns type of character 
 CharacterType Character::GetCharacterType(void) {
     return _character_type;
