@@ -41,6 +41,7 @@ class Character {
         std::string GetName(void); //Returns name of character
         int GetColumn(void); //Returns column position of character
         int GetRow(void); //Returns row position of character
+        std::pair<int, int> GetPosition(void); //Returns position of character
         int GetStrength(void); //Returns strength of character
         int GetDexterity(void); //Returns dexterity of character
         int GetConstitution(void); //Returns constitution of character
@@ -52,6 +53,7 @@ class Character {
         int GetArmorClass(void); //Returns armor class of character
         int GetInitiative(void); //Returns initiative of character
         int GetSpeed(void); //Returns speed of character
+        void DisplayCharacterInfo(void); //Displays character info
         CharacterType GetCharacterType(void); //Returns type of character
         Class GetClass(void); //Returns class of character
         void SetColumn(int column); //Sets column position of character
