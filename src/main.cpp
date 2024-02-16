@@ -27,15 +27,12 @@ int main(int argc, char *argv[]) {
     
     vector<string> input = PromptGameStart();
     GameMap map = GameMap(input[0]);
-  //  map.PrintMap();
+    map.PrintMap();
     GameCharacters characters = GameCharacters(input);
     //initialize charactesr from input vector
-  //  characters.GetCharacter(0)->DisplayCharacterInfo();
+    characters.GetCharacter(0)->DisplayCharacterInfo();
 
     startGame();
-
-    display_text("It is ");
-    display_text(characters.GetCharacter(0)->GetName());
-    display_text("'s turn\n");
+    int result = game_loop(map, characters);
     return 0;
 }

@@ -40,6 +40,10 @@ int Character::GetRow(void) {
     return _row;
 }
 
+std::pair<int, int> Character::GetPosition(void) {
+    return std::make_pair(_column, _row);
+}
+
 //Returns strength of character
 int Character::GetStrength(void) {
     return _strength;
