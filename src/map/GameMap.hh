@@ -63,8 +63,10 @@ class GameMap {
         double Lerp(int a, int b, double t);
         Hexagon* HexLerp(Hexagon* a, Hexagon* b, double t);
         std::vector<Hexagon*> HexLineDraw(Hexagon* start, Hexagon* end, bool& check);
+        
         std::vector<Hexagon*> FieldOfView(Hexagon* start, int range);
         std::vector<Hexagon*> FindClosestPlayer(Hexagon* monster_hexagon, std::vector<Hexagon*> characters_hexagons);
+        std::vector<Hexagon*> PathFind(Hexagon* start, Hexagon* end);
 
         void PrintMap(void);
 

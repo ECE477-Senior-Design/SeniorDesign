@@ -16,5 +16,6 @@ vector<string> getMapandCharStrings(string filepath);
 vector<string> PromptGameStart(void);
 void startGame(void);
 int game_loop(GameMap &map, GameCharacters &characters);
+bool check_valid_move(pair<int, int> move, int roll, GameMap &map, GameCharacters &characters);
 
 #endif
