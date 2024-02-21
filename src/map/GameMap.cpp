@@ -462,7 +462,7 @@ std::vector<Hexagon*> GameMap::PathFind(Hexagon* start, Hexagon* end) {
             }
         }
     }
-    
+
     //destroys the node_map before returning an empty vector
     //this is necessary to avoid memory leaks
     //an empty vector is returned if the end node is not reachable
@@ -483,27 +483,27 @@ void GameMap::PrintMap(void) {
         for (int column = 0; column < _columns; column++) {
             HexagonType type = map[row][column]->GetType();
             if (type == BaseHex) {
-                std::string output = "Base ";
-                std::cout << output << map[row][column]->GetHexQ() << " " << map[row][column]->GetHexR() << " ";
+                std::string output = "| Base (";
+                std::cout << output << map[row][column]->GetHexQ() << " " << map[row][column]->GetHexR() << ") |";
             }
             else if (type == WallHex) {
-                std::string output = "Wall ";
-                std::cout << output << map[row][column]->GetHexQ() << " " << map[row][column]->GetHexR() << " ";
+                std::string output = "| Wall (";
+                std::cout << output << map[row][column]->GetHexQ() << " " << map[row][column]->GetHexR() << ") |";
             }
             else if (type == PlayerHex) {
-                std::string output = "Player ";
-                std::cout << output << map[row][column]->GetHexQ() << " " << map[row][column]->GetHexR() << " ";
+                std::string output = "| Player (";
+                std::cout << output << map[row][column]->GetHexQ() << " " << map[row][column]->GetHexR() << ") |";
             }
             else if (type == MonsterHex) {
-                std::string output = "Monster ";
-                std::cout << output << map[row][column]->GetHexQ() << " " << map[row][column]->GetHexR() << " ";
+                std::string output = "| Monster (";
+                std::cout << output << map[row][column]->GetHexQ() << " " << map[row][column]->GetHexR() << ") |";
             }
             else {
                 std::string output = "Unknown ";
                 std::cout << output << map[row][column]->GetHexQ() << " " << map[row][column]->GetHexR() << " ";
             }
         }
-        std::cout << std::endl;
+        std::cout << "\n" << std::endl;
     }
 }
 
