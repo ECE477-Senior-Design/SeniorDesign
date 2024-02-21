@@ -39,9 +39,11 @@ class Character {
         int strength, int dexterity, int constitution, int intelligence, int wisdom, int charisma,
         int max_health_points, int current_health_points, int armor_class, int initiative, int speed); //Constructor for character class that keeps track of hex position, ability score, and some combat values
         std::string GetName(void); //Returns name of character
+        
         int GetColumn(void); //Returns column position of character
         int GetRow(void); //Returns row position of character
         std::pair<int, int> GetPosition(void); //Returns position of character
+
         int GetStrength(void); //Returns strength of character
         int GetDexterity(void); //Returns dexterity of character
         int GetConstitution(void); //Returns constitution of character

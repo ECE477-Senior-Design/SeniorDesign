@@ -9,6 +9,10 @@ NOTE: NEEDS TO BE RAN ON A LINUX SYSTEM OR ECEPROG. WE NEED TO DISCUSS IF WANT T
 Next to do: Print out map in a more meaningful way to better see result of code
 */
 
+#include <string>
+#include <iostream>
+#include <fstream>
+
 #include "map/GameMap.hh"
 #include "character/GameCharacters.hh"
 
@@ -97,7 +101,7 @@ void CharacterTest(void) {
         CharacterType character_type = Player;
         HexagonType hexagon_type = PlayerHex;
 
-        characters.AddCharacter(i - 1, column, row, 
+        characters.AddCharacter(i-1, std::string("char") + std::to_string(i), column, row, 
         strength, dexterity, constitution, intelligence, wisdom, charisma,
         max_health_points, current_health_points, armor_class, initiative, speed, character_type, class_);
         map.ChangeHex(column, row, hexagon_type);
@@ -156,7 +160,7 @@ void CharacterTest(void) {
         CharacterType character_type = Monster;
         HexagonType hexagon_type = MonsterHex;
 
-        characters.AddCharacter(number_players + j - 1, column, row, 
+        characters.AddCharacter(number_players + j - 1, std::string("char") + std::to_string(number_players + j),column, row, 
         strength, dexterity, constitution, intelligence, wisdom, charisma,
         max_health_points, current_health_points, armor_class, initiative, speed, character_type, class_);
         map.ChangeHex(column, row, hexagon_type);

@@ -68,15 +68,34 @@ void startGame() {
     display_text("Game has begun!\n\n");
 }
 
-pair<int, int> get_move(void) {
-    display_text("Move Character: ");
-    display_text("column: ");
-    string col = fetch_input();
-    int col_num = stoi(col);
-    display_text("row: ");
-    string row = fetch_input();
-    int row_num = stoi(row);
-    return make_pair(col_num, row_num);
+bool check_valid_move(pair<int, int> move, int roll, GameMap &map, Character &character) {
+    Hexagon *start_hex = map.GetHex(character.GetColumn(), character.GetRow());
+    Hexagon *end_hex = map.GetHex(move.first, move.second);
+    if(end_hex->GetPassable() == false) {
+        display_text("Invalid move: Hex is not passable\n");
+        return false;
+    }
+    std::vector<Hexagon*> path = map.PathFind(start_hex, end_hex);
+    if(path.size() == 0) {
+        display_text("Invalid move: No path to hex\n");
+        return false;
+    }
+    else if(path.size() > roll) {
+        display_text("Invalid move: Path is longer than roll\n");
+        return false;
+    }
+    else {
+        display_text("Valid move\n");
+        return true;
+    }
+}
+
+void move_character(GameMap &map, Character &character, pair<int, int> move) {
+    map.ChangeHex(character.GetColumn(), character.GetRow(), HexagonType::BaseHex);
+    character.SetColumn(move.first);
+    character.SetRow(move.second);
+    map.ChangeHex(move.first, move.second, HexagonType::PlayerHex);
+
 }
 
 int game_loop(GameMap &map, GameCharacters &characters) {
@@ -89,9 +108,23 @@ int game_loop(GameMap &map, GameCharacters &characters) {
             display_text("Enter Dice Roll: ");
             string roll = fetch_input();
             int roll_num = stoi(roll);
+
+            //display possible moves
+
+
+            display_text("Move Character on Map\n");
             pair<int, int> move = get_move();
-          //  characters.GetCharacter(i)->MoveCharacter(move.first, move.second);
+
+            //check if move is valid
+            while(!check_valid_move(move, roll_num, map, *characters.GetCharacter(i))) {
+                display_text("Move Character again\n");
+                move = get_move();
+            }
+
+            //move character
+            move_character(map, *characters.GetCharacter(i), move);
             map.PrintMap();
+            //proceed with game
 
         //    display_text(roll);
           //  display_text("\n\n");
