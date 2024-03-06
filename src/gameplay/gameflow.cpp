@@ -71,16 +71,26 @@ void startGame() {
 bool check_valid_move(pair<int, int> move, int roll, GameMap &map, Character &character) {
     Hexagon *start_hex = map.GetHex(character.GetColumn(), character.GetRow());
     Hexagon *end_hex = map.GetHex(move.first, move.second);
-    if(end_hex->GetPassable() == false) {
+
+    if(end_hex->GetHexColumn() == start_hex->GetHexColumn() && end_hex->GetHexRow() == start_hex->GetHexRow()) {
+        display_text("Invalid move: Did not move player\n");
+        return false;
+    }
+    else if(end_hex->GetType() == HexagonType::PlayerHex || end_hex->GetType() == HexagonType::MonsterHex) {
+        display_text("Invalid move: Hex is occupied\n");
+        return false;
+    }
+    else if(end_hex->GetPassable() == false) {
         display_text("Invalid move: Hex is not passable\n");
         return false;
     }
+    
     std::vector<Hexagon*> path = map.PathFind(start_hex, end_hex);
     if(path.size() == 0) {
         display_text("Invalid move: No path to hex\n");
         return false;
     }
-    else if(path.size() > roll) {
+    else if((int)path.size() > roll) {
         display_text("Invalid move: Path is longer than roll\n");
         return false;
     }
@@ -92,18 +102,22 @@ bool check_valid_move(pair<int, int> move, int roll, GameMap &map, Character &ch
 
 void move_character(GameMap &map, Character &character, pair<int, int> move) {
     map.ChangeHex(character.GetColumn(), character.GetRow(), HexagonType::BaseHex);
+    
     character.SetColumn(move.first);
     character.SetRow(move.second);
-    map.ChangeHex(move.first, move.second, HexagonType::PlayerHex);
-
+    
+    map.ChangeHex(move.second, move.first, HexagonType::PlayerHex);
 }
 
 int game_loop(GameMap &map, GameCharacters &characters) {
     while(characters.GetNumberCharacters() > 1) {
         for(int i = 0; i < characters.GetNumberCharacters(); i++) {
+            Character curr_char = *characters.GetCharacter(i);
             display_text("It is ");
-            display_text(characters.GetCharacter(i)->GetName());
+            display_text(curr_char.GetName());
             display_text("'s turn\n\n");
+
+            cout << "x: " << curr_char.GetColumn() << "  y: " << curr_char.GetRow() << endl;
             
             display_text("Enter Dice Roll: ");
             string roll = fetch_input();
@@ -116,18 +130,16 @@ int game_loop(GameMap &map, GameCharacters &characters) {
             pair<int, int> move = get_move();
 
             //check if move is valid
-            while(!check_valid_move(move, roll_num, map, *characters.GetCharacter(i))) {
+            while(!check_valid_move(axial_to_cart(move), roll_num, map, curr_char)) {
                 display_text("Move Character again\n");
                 move = get_move();
             }
 
             //move character
-            move_character(map, *characters.GetCharacter(i), move);
+            move_character(map, curr_char, axial_to_cart(move));
+            cout << "x: " << curr_char.GetColumn() << "  y: " << curr_char.GetRow() << endl;
             map.PrintMap();
             //proceed with game
-
-        //    display_text(roll);
-          //  display_text("\n\n");
 
 
         }
