@@ -55,7 +55,7 @@ class GameMap {
         int GetColumns(void); //Returns the number of columns
 
         Hexagon* GetHex(int row, int column);
-        void ChangeHex(int column, int row, HexagonType type);
+        void ChangeHex(int row, int column, HexagonType type);
 
         std::vector<Hexagon*> GetNeighbors(Hexagon* hexagon);
         std::vector<Hexagon*> PossibleMovements(Hexagon* start, int movement);

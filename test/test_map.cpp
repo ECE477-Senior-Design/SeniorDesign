@@ -11,6 +11,7 @@ Next to do: Print out map in a more meaningful way to better see result of code
 
 #include "map/GameMap.hh"
 #include "character/GameCharacters.hh"
+#include "gameplay/gameflow.hh"
 
 //Arbitrary small to make it easier to see. Can adjust as needed
 const int columns = 5;

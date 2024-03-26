@@ -69,8 +69,12 @@ void startGame() {
 }
 
 bool check_valid_move(pair<int, int> move, int roll, GameMap &map, Character &character) {
+    cout << "end hex: x: " << move.second << " y: " << move.first << endl;
+
     Hexagon *start_hex = map.GetHex(character.GetColumn(), character.GetRow());
-    Hexagon *end_hex = map.GetHex(move.first, move.second);
+    Hexagon *end_hex = map.GetHex(move.second, move.first);
+
+    
 
     if(end_hex->GetHexColumn() == start_hex->GetHexColumn() && end_hex->GetHexRow() == start_hex->GetHexRow()) {
         display_text("Invalid move: Did not move player\n");
@@ -86,6 +90,7 @@ bool check_valid_move(pair<int, int> move, int roll, GameMap &map, Character &ch
     }
     
     std::vector<Hexagon*> path = map.PathFind(start_hex, end_hex);
+    cout << "Length of Path: " << path.size() << endl;
     if(path.size() == 0) {
         display_text("Invalid move: No path to hex\n");
         return false;
@@ -101,7 +106,7 @@ bool check_valid_move(pair<int, int> move, int roll, GameMap &map, Character &ch
 }
 
 void move_character(GameMap &map, Character &character, pair<int, int> move) {
-    map.ChangeHex(character.GetColumn(), character.GetRow(), HexagonType::BaseHex);
+    map.ChangeHex(character.GetRow(), character.GetColumn(), HexagonType::BaseHex);
     
     character.SetColumn(move.first);
     character.SetRow(move.second);
@@ -112,7 +117,7 @@ void move_character(GameMap &map, Character &character, pair<int, int> move) {
 int game_loop(GameMap &map, GameCharacters &characters) {
     while(characters.GetNumberCharacters() > 1) {
         for(int i = 0; i < characters.GetNumberCharacters(); i++) {
-            Character curr_char = *characters.GetCharacter(i);
+            Character &curr_char = characters.GetCharacter(i);
             display_text("It is ");
             display_text(curr_char.GetName());
             display_text("'s turn\n\n");
@@ -140,6 +145,7 @@ int game_loop(GameMap &map, GameCharacters &characters) {
             cout << "x: " << curr_char.GetColumn() << "  y: " << curr_char.GetRow() << endl;
             map.PrintMap();
             //proceed with game
+            
 
 
         }
