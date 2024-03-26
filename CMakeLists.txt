@@ -12,8 +12,11 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../bin)
 #add_subdirectory(src)
 #add_subdirectory(test)
 
+
 include_directories( ./include ./src )
 include(CTest)
+find_package(Catch2 2 REQUIRED)
+include(Catch)
 
 set(MAIN
     src/main.cpp)
@@ -71,6 +74,9 @@ enable_testing()
 add_executable(dungeon_crawler ${MAIN} ${SOURCES})
 add_executable(char_test test/test_character.cpp ${SOURCES})
 add_executable(map_test test/test_map.cpp ${SOURCES})
+add_executable(movement_test test/test_movement.cpp ${SOURCES})
+target_link_libraries(movement_test PRIVATE Catch2::Catch2)
+catch_discover_tests(movement_test)
 
 add_custom_target(run
     COMMAND dungeon_crawler

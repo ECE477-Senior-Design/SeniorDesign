@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
     map.PrintMap();
     GameCharacters characters = GameCharacters(input);
     //initialize charactesr from input vector
-    characters.GetCharacter(0)->DisplayCharacterInfo();
+   // characters.GetCharacter(0)->DisplayCharacterInfo();
 
     startGame();
     int result = game_loop(map, characters);

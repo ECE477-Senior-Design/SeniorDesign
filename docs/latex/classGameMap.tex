@@ -1,0 +1,59 @@
+\hypertarget{classGameMap}{}\doxysection{Game\+Map Class Reference}
+\label{classGameMap}\index{GameMap@{GameMap}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classGameMap_a3e418f339df329b012861d951b57bbf5}\label{classGameMap_a3e418f339df329b012861d951b57bbf5}} 
+{\bfseries Game\+Map} (int rows, int columns)
+\item 
+\mbox{\Hypertarget{classGameMap_a451304148a679c71a811661db7bec991}\label{classGameMap_a451304148a679c71a811661db7bec991}} 
+{\bfseries Game\+Map} (std\+::string mapstring)
+\item 
+\mbox{\Hypertarget{classGameMap_a443ccce37176f89f8fe1a7dcc085914f}\label{classGameMap_a443ccce37176f89f8fe1a7dcc085914f}} 
+int {\bfseries Get\+Rows} (void)
+\item 
+\mbox{\Hypertarget{classGameMap_a558b8771d28da7e28fc0cfc74943152b}\label{classGameMap_a558b8771d28da7e28fc0cfc74943152b}} 
+int {\bfseries Get\+Columns} (void)
+\item 
+\mbox{\Hypertarget{classGameMap_ab3ab0148b34431eb7c7e43b8a87ce3b8}\label{classGameMap_ab3ab0148b34431eb7c7e43b8a87ce3b8}} 
+\mbox{\hyperlink{classHexagon}{Hexagon}} $\ast$ {\bfseries Get\+Hex} (int row, int column)
+\item 
+\mbox{\Hypertarget{classGameMap_acd9eab0434f902739ab0435c8745ea7c}\label{classGameMap_acd9eab0434f902739ab0435c8745ea7c}} 
+void {\bfseries Change\+Hex} (int column, int row, Hexagon\+Type type)
+\item 
+\mbox{\Hypertarget{classGameMap_a8873e6cbf0a404fb23b7f1e98549405e}\label{classGameMap_a8873e6cbf0a404fb23b7f1e98549405e}} 
+std\+::vector$<$ \mbox{\hyperlink{classHexagon}{Hexagon}} $\ast$ $>$ {\bfseries Get\+Neighbors} (\mbox{\hyperlink{classHexagon}{Hexagon}} $\ast$hexagon)
+\item 
+\mbox{\Hypertarget{classGameMap_adf4ffe0fe64e00fb1a92268d45fc1fbf}\label{classGameMap_adf4ffe0fe64e00fb1a92268d45fc1fbf}} 
+std\+::vector$<$ \mbox{\hyperlink{classHexagon}{Hexagon}} $\ast$ $>$ {\bfseries Possible\+Movements} (\mbox{\hyperlink{classHexagon}{Hexagon}} $\ast$start, int movement)
+\item 
+\mbox{\Hypertarget{classGameMap_a103a97e8ad13e20f86ba4b728575f713}\label{classGameMap_a103a97e8ad13e20f86ba4b728575f713}} 
+int {\bfseries Hex\+Distance} (\mbox{\hyperlink{classHexagon}{Hexagon}} $\ast$start, \mbox{\hyperlink{classHexagon}{Hexagon}} $\ast$end)
+\item 
+\mbox{\Hypertarget{classGameMap_afae821631bcea11e0d1656a958b8648b}\label{classGameMap_afae821631bcea11e0d1656a958b8648b}} 
+double {\bfseries Lerp} (int a, int b, double t)
+\item 
+\mbox{\Hypertarget{classGameMap_afd928573e472cb31af07e2ef05bfae99}\label{classGameMap_afd928573e472cb31af07e2ef05bfae99}} 
+\mbox{\hyperlink{classHexagon}{Hexagon}} $\ast$ {\bfseries Hex\+Lerp} (\mbox{\hyperlink{classHexagon}{Hexagon}} $\ast$a, \mbox{\hyperlink{classHexagon}{Hexagon}} $\ast$b, double t)
+\item 
+\mbox{\Hypertarget{classGameMap_a1bea461e725ff2ae05aef0fd0a722176}\label{classGameMap_a1bea461e725ff2ae05aef0fd0a722176}} 
+std\+::vector$<$ \mbox{\hyperlink{classHexagon}{Hexagon}} $\ast$ $>$ {\bfseries Hex\+Line\+Draw} (\mbox{\hyperlink{classHexagon}{Hexagon}} $\ast$start, \mbox{\hyperlink{classHexagon}{Hexagon}} $\ast$end, bool \&check)
+\item 
+\mbox{\Hypertarget{classGameMap_abd80a5463cce90908d690c74220ccb86}\label{classGameMap_abd80a5463cce90908d690c74220ccb86}} 
+std\+::vector$<$ \mbox{\hyperlink{classHexagon}{Hexagon}} $\ast$ $>$ {\bfseries Field\+Of\+View} (\mbox{\hyperlink{classHexagon}{Hexagon}} $\ast$start, int range)
+\item 
+\mbox{\Hypertarget{classGameMap_a5adc8f85505809ed21c11172d067baae}\label{classGameMap_a5adc8f85505809ed21c11172d067baae}} 
+std\+::vector$<$ \mbox{\hyperlink{classHexagon}{Hexagon}} $\ast$ $>$ {\bfseries Find\+Closest\+Player} (\mbox{\hyperlink{classHexagon}{Hexagon}} $\ast$monster\+\_\+hexagon, std\+::vector$<$ \mbox{\hyperlink{classHexagon}{Hexagon}} $\ast$ $>$ characters\+\_\+hexagons)
+\item 
+\mbox{\Hypertarget{classGameMap_a9859b42e1d2e457487be808ad62eb07a}\label{classGameMap_a9859b42e1d2e457487be808ad62eb07a}} 
+std\+::vector$<$ \mbox{\hyperlink{classHexagon}{Hexagon}} $\ast$ $>$ {\bfseries Path\+Find} (\mbox{\hyperlink{classHexagon}{Hexagon}} $\ast$start, \mbox{\hyperlink{classHexagon}{Hexagon}} $\ast$end)
+\item 
+\mbox{\Hypertarget{classGameMap_a00e973fef5ceef61e78b450cf6df59ae}\label{classGameMap_a00e973fef5ceef61e78b450cf6df59ae}} 
+void {\bfseries Print\+Map} (void)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/map/Game\+Map.\+hh\item 
+src/map/Game\+Map.\+cpp\end{DoxyCompactItemize}
